@@ -8,7 +8,8 @@ public class HelloController {
 
     @GetMapping("Hello")
     public Object hello(){
-        return "HelloWord";
+        return "HelloWordTest";
     }
 
+    //
 }
