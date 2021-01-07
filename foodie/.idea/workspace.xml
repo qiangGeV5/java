@@ -2,20 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ca4dc8ea-c1ba-4a10-aeb3-41786d593621" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/foodie-dev-api/src/main/java/com/zq/controller/StuFooController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/foodie-dev-service/src/main/java/com/zq/service/StuService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/foodie-dev-service/src/main/java/com/zq/service/impl/StuServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/foodie-dev-api/src/main/java/com/zq/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/foodie-dev-api/src/main/java/com/zq/Application.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/foodie-dev-api/target/classes/com/zq/Application.class" beforeDir="false" afterPath="$PROJECT_DIR$/foodie-dev-api/target/classes/com/zq/Application.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/foodie-dev-api/target/foodie-dev-api-1.0-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/foodie-dev-api/target/foodie-dev-api-1.0-SNAPSHOT.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/foodie-dev-api/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/foodie-dev-api/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/foodie-dev-api/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/foodie-dev-api/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/foodie-dev-common/target/foodie-dev-common-1.0-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/foodie-dev-common/target/foodie-dev-common-1.0-SNAPSHOT.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/foodie-dev-mapper/target/foodie-dev-mapper-1.0-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/foodie-dev-mapper/target/foodie-dev-mapper-1.0-SNAPSHOT.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/foodie-dev-pojo/target/foodie-dev-pojo-1.0-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/foodie-dev-pojo/target/foodie-dev-pojo-1.0-SNAPSHOT.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/foodie-dev-service/target/foodie-dev-service-1.0-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/foodie-dev-service/target/foodie-dev-service-1.0-SNAPSHOT.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/foodie-dev-service/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/foodie-dev-service/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/foodie-dev-api/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/foodie-dev-api/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/foodie-dev-api/src/main/java/com/zq/controller/StuFooController.java" beforeDir="false" afterPath="$PROJECT_DIR$/foodie-dev-api/src/main/java/com/zq/controller/StuFooController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/foodie-dev-api/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/foodie-dev-api/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/foodie-dev-service/src/main/java/com/zq/service/impl/StuServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/foodie-dev-service/src/main/java/com/zq/service/impl/StuServiceImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -138,7 +129,7 @@
       <workItem from="1610000865298" duration="1127000" />
       <workItem from="1610006553646" duration="1314000" />
       <workItem from="1610009328782" duration="7179000" />
-      <workItem from="1610017260440" duration="735000" />
+      <workItem from="1610017260440" duration="4737000" />
     </task>
     <servers />
   </component>
@@ -166,38 +157,38 @@
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
     <state x="625" y="343" width="486" height="276" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes/0.23.1680.1027@0.23.1680.1027" timestamp="1610017555329" />
-    <state width="1348" height="331" key="GridCell.Tab.0.bottom" timestamp="1610018260119">
+    <state width="1348" height="331" key="GridCell.Tab.0.bottom" timestamp="1610026508187">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state width="1348" height="331" key="GridCell.Tab.0.bottom/0.23.1680.1027@0.23.1680.1027" timestamp="1610018260119" />
-    <state width="1348" height="331" key="GridCell.Tab.0.center" timestamp="1610018260118">
+    <state width="1348" height="331" key="GridCell.Tab.0.bottom/0.23.1680.1027@0.23.1680.1027" timestamp="1610026508187" />
+    <state width="1348" height="331" key="GridCell.Tab.0.center" timestamp="1610026508186">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state width="1348" height="331" key="GridCell.Tab.0.center/0.23.1680.1027@0.23.1680.1027" timestamp="1610018260118" />
-    <state width="1348" height="331" key="GridCell.Tab.0.left" timestamp="1610018260118">
+    <state width="1348" height="331" key="GridCell.Tab.0.center/0.23.1680.1027@0.23.1680.1027" timestamp="1610026508186" />
+    <state width="1348" height="331" key="GridCell.Tab.0.left" timestamp="1610026508185">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state width="1348" height="331" key="GridCell.Tab.0.left/0.23.1680.1027@0.23.1680.1027" timestamp="1610018260118" />
-    <state width="1348" height="331" key="GridCell.Tab.0.right" timestamp="1610018260119">
+    <state width="1348" height="331" key="GridCell.Tab.0.left/0.23.1680.1027@0.23.1680.1027" timestamp="1610026508185" />
+    <state width="1348" height="331" key="GridCell.Tab.0.right" timestamp="1610026508187">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state width="1348" height="331" key="GridCell.Tab.0.right/0.23.1680.1027@0.23.1680.1027" timestamp="1610018260119" />
-    <state width="1348" height="331" key="GridCell.Tab.1.bottom" timestamp="1610018260120">
+    <state width="1348" height="331" key="GridCell.Tab.0.right/0.23.1680.1027@0.23.1680.1027" timestamp="1610026508187" />
+    <state width="1348" height="331" key="GridCell.Tab.1.bottom" timestamp="1610023155881">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state width="1348" height="331" key="GridCell.Tab.1.bottom/0.23.1680.1027@0.23.1680.1027" timestamp="1610018260120" />
-    <state width="1348" height="331" key="GridCell.Tab.1.center" timestamp="1610018260120">
+    <state width="1348" height="331" key="GridCell.Tab.1.bottom/0.23.1680.1027@0.23.1680.1027" timestamp="1610023155881" />
+    <state width="1348" height="331" key="GridCell.Tab.1.center" timestamp="1610023155880">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state width="1348" height="331" key="GridCell.Tab.1.center/0.23.1680.1027@0.23.1680.1027" timestamp="1610018260120" />
-    <state width="1348" height="331" key="GridCell.Tab.1.left" timestamp="1610018260119">
+    <state width="1348" height="331" key="GridCell.Tab.1.center/0.23.1680.1027@0.23.1680.1027" timestamp="1610023155880" />
+    <state width="1348" height="331" key="GridCell.Tab.1.left" timestamp="1610023155880">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state width="1348" height="331" key="GridCell.Tab.1.left/0.23.1680.1027@0.23.1680.1027" timestamp="1610018260119" />
-    <state width="1348" height="331" key="GridCell.Tab.1.right" timestamp="1610018260120">
+    <state width="1348" height="331" key="GridCell.Tab.1.left/0.23.1680.1027@0.23.1680.1027" timestamp="1610023155880" />
+    <state width="1348" height="331" key="GridCell.Tab.1.right" timestamp="1610023155880">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state width="1348" height="331" key="GridCell.Tab.1.right/0.23.1680.1027@0.23.1680.1027" timestamp="1610018260120" />
+    <state width="1348" height="331" key="GridCell.Tab.1.right/0.23.1680.1027@0.23.1680.1027" timestamp="1610023155880" />
     <state width="1348" height="164" key="GridCell.Tab.2.bottom" timestamp="1610017171474">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
@@ -226,16 +217,5 @@
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
     <state x="244" y="393" key="new project wizard/0.23.1680.1027@0.23.1680.1027" timestamp="1609930595250" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/foodie-dev-api/src/main/java/com/zq/controller/StuFooController.java</url>
-          <line>17</line>
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>
