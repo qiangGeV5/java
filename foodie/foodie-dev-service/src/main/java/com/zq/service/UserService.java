@@ -10,4 +10,6 @@ public interface UserService {
 
     public Users createUser(UserBO userBO);
 
+    public Users queryUserForLogin(String username,String password);
+
 }
