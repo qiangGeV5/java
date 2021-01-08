@@ -3,6 +3,8 @@ package com.zq.controller;
 import com.zq.pojo.Users;
 import com.zq.pojo.bo.UserBO;
 import com.zq.service.UserService;
+import com.zq.utils.CookieUtils;
+import com.zq.utils.JsonUtils;
 import com.zq.utils.MD5Utils;
 import com.zq.utils.ZQJSONResult;
 import io.swagger.annotations.Api;
@@ -10,6 +12,9 @@ import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @Api(value = "注册登录",tags = "用于注册登录的相关接口")
 @RestController
@@ -40,7 +45,8 @@ public class PassportController {
 
     @ApiOperation(value = "用户注册", notes = "用户注册",httpMethod = "POST")
     @PostMapping("/regist")
-    public ZQJSONResult regist(@RequestBody UserBO userBO){
+    public ZQJSONResult regist(@RequestBody UserBO userBO, HttpServletRequest request,
+                               HttpServletResponse response){
 
         String username = userBO.getUsername();
         String password = userBO.getPassword();
@@ -64,7 +70,15 @@ public class PassportController {
             return ZQJSONResult.errorMsg("两次密码不一致");
         }
         //5、实现注册
-        userService.createUser(userBO);
+        Users users = userService.createUser(userBO);
+
+
+        users = setNullProperty(users);
+
+        CookieUtils.setCookie(request, response, "user",
+                JsonUtils.objectToJson(users), true);
+
+
 
         return ZQJSONResult.ok();
 
@@ -72,7 +86,9 @@ public class PassportController {
 
     @ApiOperation(value = "用户登录", notes = "用户登录",httpMethod = "POST")
     @PostMapping("/login")
-    public ZQJSONResult login(@RequestBody UserBO userBO) throws Exception{
+    public ZQJSONResult login(@RequestBody UserBO userBO,
+                              HttpServletRequest request,
+                              HttpServletResponse response) throws Exception{
 
         String username = userBO.getUsername();
         String password = userBO.getPassword();
@@ -86,6 +102,21 @@ public class PassportController {
             return ZQJSONResult.errorMsg("用户名密码不能为空");
         }
 
+        users = setNullProperty(users);
+
+        CookieUtils.setCookie(request, response, "user",
+                JsonUtils.objectToJson(users), true);
+
         return ZQJSONResult.ok(users);
+    }
+
+    private Users setNullProperty(Users userResult) {
+        userResult.setPassword(null);
+        userResult.setMobile(null);
+        userResult.setEmail(null);
+        userResult.setCreatedTime(null);
+        userResult.setUpdatedTime(null);
+        userResult.setBirthday(null);
+        return userResult;
     }
 }
