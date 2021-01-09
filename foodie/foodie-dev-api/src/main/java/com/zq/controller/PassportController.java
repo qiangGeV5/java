@@ -10,6 +10,8 @@ import com.zq.utils.ZQJSONResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,6 +29,12 @@ public class PassportController {
     @ApiOperation(value = "用户名是否存在", notes = "用户名是否存在",httpMethod = "GET")
     @GetMapping("/usernameIsExist")
     public ZQJSONResult usernameIsExist(@RequestParam String username){
+
+
+        Logger logger = LoggerFactory.getLogger(PassportController.class);
+        logger.error("============sssss============");
+        logger.debug("============info============");
+
 
         //判断用户名是否为空
         if (StringUtils.isBlank(username)){

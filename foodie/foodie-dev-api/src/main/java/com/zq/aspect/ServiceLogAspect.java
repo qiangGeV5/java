@@ -51,7 +51,7 @@ public class ServiceLogAspect {
         }else if (takeTime>1000&&takeTime<2000){
             log.info("============  执行结束，耗时： {}毫秒  ===========",takeTime);
         }else if (takeTime<1000){
-            log.info("============  执行结束，耗时： {}毫秒  ===========",takeTime);
+            log.error("============  执行结束，耗时： {}毫秒  ===========",takeTime);
         }
 
 
