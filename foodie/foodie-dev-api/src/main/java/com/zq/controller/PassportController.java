@@ -102,6 +102,7 @@ public class PassportController {
             return ZQJSONResult.errorMsg("用户名密码不能为空");
         }
 
+
         users = setNullProperty(users);
 
         CookieUtils.setCookie(request, response, "user",
