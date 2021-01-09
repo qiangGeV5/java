@@ -49,3 +49,5 @@ mybatis:
     mappers: com.imooc.my.mapper.MyMapper
     not-empty: false   //在进行数据库操作的时候，判断表达式 username != null，是否追加username != ''
     identity: MYSQL
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

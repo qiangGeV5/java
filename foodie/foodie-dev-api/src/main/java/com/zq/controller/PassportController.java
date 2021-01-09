@@ -120,4 +120,21 @@ public class PassportController {
         userResult.setBirthday(null);
         return userResult;
     }
+
+    @ApiOperation(value = "用户退出登录", notes = "用户退出登录",httpMethod = "POST")
+    @PostMapping("/logout")
+    public ZQJSONResult logout(@RequestParam String userId,
+                               HttpServletRequest request,
+                               HttpServletResponse response) {
+
+        //清除用户相关cookie信息
+        CookieUtils.deleteCookie(request,response,"user");
+
+        //todo
+        //todo
+
+        return ZQJSONResult.ok();
+    }
+
+
 }
