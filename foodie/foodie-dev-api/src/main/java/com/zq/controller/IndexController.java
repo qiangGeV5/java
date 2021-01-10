@@ -4,6 +4,7 @@ import com.zq.enums.YesOrNo;
 import com.zq.pojo.Carousel;
 import com.zq.pojo.Category;
 import com.zq.pojo.vo.CategoryVO;
+import com.zq.pojo.vo.NewItemsVO;
 import com.zq.service.CarouselService;
 import com.zq.service.CategoryService;
 import com.zq.utils.ZQJSONResult;
@@ -66,6 +67,20 @@ public class IndexController {
         List<CategoryVO> subCategoryList = categoryService.getSubCategoryList(rootCatId);
 
         return ZQJSONResult.ok(subCategoryList);
+    }
+
+    @ApiOperation(value = "查询每个一级分类下的六条最新数据", notes = "查询每个一级分类下的六条最新数据",httpMethod = "GET")
+    @GetMapping("/sixNewItems/{rootCatId}")
+    public ZQJSONResult sixNewItems(
+            @ApiParam(name = "rootCatId",value = "一级分类id",required = true)
+            @PathVariable Integer rootCatId){
+
+        if (rootCatId == null){
+            return ZQJSONResult.errorMsg("分类不存在");
+        }
+        List<NewItemsVO> sixNewItemsLazy = categoryService.getSixNewItemsLazy(rootCatId);
+
+        return ZQJSONResult.ok(sixNewItemsLazy);
     }
     //
 }

@@ -2,6 +2,7 @@ package com.zq.service;
 
 import com.zq.pojo.Category;
 import com.zq.pojo.vo.CategoryVO;
+import com.zq.pojo.vo.NewItemsVO;
 
 import java.util.List;
 
@@ -19,4 +20,11 @@ public interface CategoryService {
      * @return
      */
     public List<CategoryVO> getSubCategoryList(Integer rootCatId);
+
+    /**
+     * 查询首页一级分类下是实现
+     * @param rootCatId
+     * @return
+     */
+    public  List<NewItemsVO> getSixNewItemsLazy(Integer rootCatId);
 }

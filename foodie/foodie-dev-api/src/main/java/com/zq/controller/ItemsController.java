@@ -1,0 +1,55 @@
+package com.zq.controller;
+
+
+import com.zq.pojo.Items;
+import com.zq.pojo.ItemsImg;
+import com.zq.pojo.ItemsParam;
+import com.zq.pojo.ItemsSpec;
+import com.zq.pojo.vo.ItemInfoVO;
+import com.zq.utils.ZQJSONResult;
+import io.swagger.annotations.Api;
+import com.zq.service.ItemService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+
+@Api(value = "商品接口",tags = "商品信息相关接口")
+@RestController
+@RequestMapping("items")
+public class ItemsController {
+
+    @Autowired
+    private ItemService itemService;
+    @ApiOperation(value = "商品详情", notes = "商品详情",httpMethod = "GET")
+    @GetMapping("/info/{itemId}")
+    public ZQJSONResult info(
+            @ApiParam(name = "itemId",value = "商品id",required = true)
+            @PathVariable String itemId){
+        if (StringUtils.isBlank(itemId)){
+            return ZQJSONResult.errorMsg(null);
+        }
+
+        Items items = itemService.queryItemById(itemId);
+        List<ItemsImg> itemsImgs = itemService.queryItemImgfList(itemId);
+        List<ItemsSpec> itemsSpecs = itemService.queryItemSpecList(itemId);
+        ItemsParam itemsParam = itemService.queryItemParam(itemId);
+
+        ItemInfoVO itemInfoVO = new ItemInfoVO();
+        itemInfoVO.setItem(items);
+        itemInfoVO.setItemImgList(itemsImgs);
+        itemInfoVO.setItemParams(itemsParam);
+        itemInfoVO.setItemSpecList(itemsSpecs);
+
+
+        return ZQJSONResult.ok(itemInfoVO);
+    }
+
+
+}

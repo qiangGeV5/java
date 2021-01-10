@@ -70,6 +70,7 @@ public class UserServiceImpl implements UserService {
         return users;
     }
 
+    @Transactional(propagation = Propagation.SUPPORTS)
     @Override
     public Users queryUserForLogin(String username, String password) {
 
