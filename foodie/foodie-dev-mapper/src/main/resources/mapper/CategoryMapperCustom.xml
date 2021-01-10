@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zq.mapper.CategoryMapperCustom" >
+    <resultMap id="myCategoryVO" type="com.zq.pojo.vo.CategoryVO">
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="type" property="type" jdbcType="INTEGER" />
+        <result column="fatherId" property="fatherId" jdbcType="INTEGER" />
+
+        <collection property="subCatList" ofType="com.zq.pojo.vo.SubCategoryVO">
+            <id column="subId" property="subId" jdbcType="INTEGER" />
+            <result column="subName" property="subName" jdbcType="VARCHAR" />
+            <result column="subType" property="subType" jdbcType="INTEGER" />
+            <result column="subFatherId" property="subFatherId" jdbcType="INTEGER" />
+
+        </collection>
+    </resultMap>
+  <select id="getSubCatList" resultMap="myCategoryVO" parameterType="int">
+    SELECT
+        f.id AS id,
+        f.`name`AS `name`,
+        f.type AS type,
+        f.father_id AS fatherId,
+        c.id AS subId,
+        c.`name`AS `subName`,
+        c.type AS subType,
+        c.father_id AS subFatherId
+    FROM
+        category f
+    LEFT JOIN
+        category c
+    ON
+        f.id = c.father_id
+    WHERE
+	    f.father_id = #{rooCatId}
+  </select>
+
+</mapper>

@@ -1,0 +1,22 @@
+package com.zq.service;
+
+import com.zq.pojo.Category;
+import com.zq.pojo.vo.CategoryVO;
+
+import java.util.List;
+
+public interface CategoryService {
+
+    /**
+     * 查询所有一级分类
+     * @return
+     */
+    public List<Category> queryAllRootLevelCat();
+
+    /**
+     * 跟具一级分类ID，查询子分类信息
+     * @param rootCatId
+     * @return
+     */
+    public List<CategoryVO> getSubCategoryList(Integer rootCatId);
+}
