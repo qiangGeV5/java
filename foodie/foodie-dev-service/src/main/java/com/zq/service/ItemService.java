@@ -5,6 +5,8 @@ import com.zq.pojo.ItemsImg;
 import com.zq.pojo.ItemsParam;
 import com.zq.pojo.ItemsSpec;
 import com.zq.pojo.vo.CommentLevelCountsVO;
+import com.zq.pojo.vo.ItemCommentVO;
+import com.zq.utils.PagedGridResult;
 
 import java.util.List;
 
@@ -46,6 +48,12 @@ public interface ItemService {
      * @param itemId
      */
     public CommentLevelCountsVO queryCommentCounts(String itemId);
+
+    /**
+     * 根据商品id查询商品评价
+     * @return
+     */
+    public PagedGridResult queryPagedComments(String itemId, Integer level, Integer page, Integer pageSize);
 
 
 }

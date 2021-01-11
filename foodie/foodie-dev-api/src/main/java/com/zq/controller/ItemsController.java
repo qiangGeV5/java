@@ -1,12 +1,15 @@
 package com.zq.controller;
 
 
+import com.zq.enums.CommentLevel;
 import com.zq.pojo.Items;
 import com.zq.pojo.ItemsImg;
 import com.zq.pojo.ItemsParam;
 import com.zq.pojo.ItemsSpec;
 import com.zq.pojo.vo.CommentLevelCountsVO;
+import com.zq.pojo.vo.ItemCommentVO;
 import com.zq.pojo.vo.ItemInfoVO;
+import com.zq.utils.PagedGridResult;
 import com.zq.utils.ZQJSONResult;
 import io.swagger.annotations.Api;
 import com.zq.service.ItemService;
@@ -21,7 +24,7 @@ import java.util.List;
 @Api(value = "商品接口",tags = "商品信息相关接口")
 @RestController
 @RequestMapping("items")
-public class ItemsController {
+public class ItemsController extends BaseController{
 
     @Autowired
     private ItemService itemService;
@@ -58,5 +61,35 @@ public class ItemsController {
         return ZQJSONResult.ok(commentLevelCountsVO);
     }
 
+    @ApiOperation(value = "select商品评价", notes = "商品评价",httpMethod = "GET")
+    @GetMapping("/comments")
+    public ZQJSONResult comments(
+            @ApiParam(name = "itemId",value = "商品id",required = true)
+            @RequestParam String itemId,
+            @ApiParam(name = "level",value = "评价等级",required = false)
+            @RequestParam Integer level,
+            @ApiParam(name = "page",value = "查询的页数",required = false)
+            @RequestParam Integer page,
+            @ApiParam(name = "pageSize",value = "每页条数",required = false)
+            @RequestParam Integer pageSize
+    ){
+        if (StringUtils.isBlank(itemId)){
+            return ZQJSONResult.errorMsg("itemId==NUll");
+        }
+        if (level == null){
+            level = CommentLevel.GOOD.type;
+        }
+        if (page == null){
+            page = 1;
+        }
+        if (pageSize == null){
+            pageSize = COMMENT_PAGE_SIZQ;
+        }
+
+        PagedGridResult pagedGridResult = itemService.queryPagedComments(itemId, level, page, pageSize);
+
+
+        return ZQJSONResult.ok(pagedGridResult);
+    }
 
 }

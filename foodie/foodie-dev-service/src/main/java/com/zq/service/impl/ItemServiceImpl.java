@@ -1,17 +1,22 @@
 package com.zq.service.impl;
 
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.zq.enums.CommentLevel;
 import com.zq.mapper.*;
 import com.zq.pojo.*;
 import com.zq.pojo.vo.CommentLevelCountsVO;
+import com.zq.pojo.vo.ItemCommentVO;
 import com.zq.service.ItemService;
+import com.zq.utils.PagedGridResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
 
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -31,6 +36,9 @@ public class ItemServiceImpl implements ItemService {
 
     @Autowired
     private ItemsCommentsMapper itemsCommentsMapper;
+
+    @Autowired
+    private ItemsMapperCustom itemsMapperCustom;
 
     @Transactional(propagation = Propagation.SUPPORTS)
     @Override
@@ -90,6 +98,8 @@ public class ItemServiceImpl implements ItemService {
         return commentLevelCountsVO;
     }
 
+
+
     @Transactional(propagation = Propagation.SUPPORTS)
     public Integer getCommentCounts(String itemId, Integer level){
         ItemsComments itemsComments = new ItemsComments();
@@ -99,5 +109,30 @@ public class ItemServiceImpl implements ItemService {
         }
         int i = itemsCommentsMapper.selectCount(itemsComments);
         return i;
+    }
+
+    @Transactional(propagation = Propagation.SUPPORTS)
+    @Override
+    public PagedGridResult queryPagedComments(String itemId, Integer level,Integer page ,Integer pageSize) {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("itemId",itemId);
+        map.put("level",level);
+
+        PageHelper.startPage(page,pageSize);
+
+        List<ItemCommentVO> itemCommentVOS = itemsMapperCustom.queryItemComments(map);
+
+        return setterPagedGrid(itemCommentVOS,page);
+    }
+
+    private PagedGridResult setterPagedGrid(List<?> list,Integer page){
+        PageInfo<?> pageList = new PageInfo<>(list);
+        PagedGridResult grid = new PagedGridResult();
+        grid.setPage(page);
+        grid.setRows(list);
+        grid.setTotal(pageList.getPages());
+        grid.setRecords(pageList.getTotal());
+
+        return grid;
     }
 }
