@@ -61,7 +61,7 @@ public class ItemsController extends BaseController{
         return ZQJSONResult.ok(commentLevelCountsVO);
     }
 
-    @ApiOperation(value = "select商品评价", notes = "商品评价",httpMethod = "GET")
+    @ApiOperation(value = "商品评价", notes = "商品评价",httpMethod = "GET")
     @GetMapping("/comments")
     public ZQJSONResult comments(
             @ApiParam(name = "itemId",value = "商品id",required = true)
@@ -85,10 +85,7 @@ public class ItemsController extends BaseController{
         if (pageSize == null){
             pageSize = COMMENT_PAGE_SIZQ;
         }
-
         PagedGridResult pagedGridResult = itemService.queryPagedComments(itemId, level, page, pageSize);
-
-
         return ZQJSONResult.ok(pagedGridResult);
     }
 
