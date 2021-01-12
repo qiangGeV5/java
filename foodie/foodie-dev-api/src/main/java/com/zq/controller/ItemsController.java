@@ -9,6 +9,7 @@ import com.zq.pojo.ItemsSpec;
 import com.zq.pojo.vo.CommentLevelCountsVO;
 import com.zq.pojo.vo.ItemCommentVO;
 import com.zq.pojo.vo.ItemInfoVO;
+import com.zq.pojo.vo.ShopcartVO;
 import com.zq.utils.PagedGridResult;
 import com.zq.utils.ZQJSONResult;
 import io.swagger.annotations.Api;
@@ -149,4 +150,18 @@ public class ItemsController extends BaseController{
         return ZQJSONResult.ok(pagedGridResult);
     }
 
+    //用于用户长时间未登录，刷新商品价格
+    @ApiOperation(value = "通过规格ids查找最新的商品", notes = "通过规格ids查找最新的商品",httpMethod = "GET")
+    @GetMapping("/refresh")
+    public ZQJSONResult refresh(
+            @ApiParam(name = "itemSpecIds",value = "拼接的规格id",required = true,example = "1001,1003,1005")
+            @RequestParam String itemSpecIds){
+        if (StringUtils.isBlank(itemSpecIds)){
+            return ZQJSONResult.errorMsg("specIds==NUll");
+        }
+
+        List<ShopcartVO> shopcartVOS = itemService.queryItemsBySpecIds(itemSpecIds);
+
+        return ZQJSONResult.ok(shopcartVOS);
+    }
 }

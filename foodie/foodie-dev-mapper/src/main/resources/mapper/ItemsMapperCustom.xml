@@ -118,4 +118,34 @@
         </choose>
 
     </select>
+
+    <select id="queryItemsBySpecIds" parameterType="List" resultType="com.zq.pojo.vo.ShopcartVO">
+        SELECT
+            t_items.id AS itemId,
+            t_items_img.url AS itemImgUrl,
+            t_items.item_name AS itemName,
+            t_items_spec.id AS specId,
+            t_items_spec.`name` AS specName,
+            t_items_spec.price_discount AS priceDiscount,
+            t_items_spec.price_normal AS priceNormal
+        FROM
+            items_spec t_items_spec
+        LEFT JOIN
+            items t_items
+        ON
+            t_items.id = t_items_spec.item_id
+        LEFT JOIN
+            items_img t_items_img
+        ON
+            t_items.id = t_items_img.item_id
+        WHERE
+            t_items_img.is_main = 1
+        AND
+            t_items_spec.id IN
+            <foreach collection="paramsList" index="index" item="specId" open="(" separator="," close=")">
+                #{specId}
+            </foreach>
+--             ('1','3','5')
+
+    </select>
 </mapper>
