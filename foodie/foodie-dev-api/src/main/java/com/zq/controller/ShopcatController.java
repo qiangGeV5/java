@@ -40,4 +40,25 @@ public class ShopcatController {
         return ZQJSONResult.ok();
     }
 
+    @ApiOperation(value = "购物车删除商品接口", notes = "购物车删除商品接口",httpMethod = "POST")
+    @PostMapping("/del")
+    public ZQJSONResult del(
+            @ApiParam(name = "userId",value = "用户ID",required = true)
+            @RequestParam String userId,
+            @ApiParam(name = "itemSpecId",value = "shopcartBO",required = false)
+            @RequestParam String itemSpecId,
+            HttpServletRequest request,
+            HttpServletResponse response
+    ){
+
+        if (StringUtils.isBlank(userId)||StringUtils.isBlank(itemSpecId)){
+            return ZQJSONResult.errorMsg("");
+        }
+
+        //TODO 前端用户在登录的情况下，购物车中删除商品，会同时在后端同步购物车到redis缓存
+
+
+        return ZQJSONResult.ok();
+    }
+
 }
