@@ -157,6 +157,7 @@ public class ItemServiceImpl implements ItemService {
         return setterPagedGrid(searchItemsVOS,page);
     }
 
+    @Transactional(propagation = Propagation.SUPPORTS)
     @Override
     public PagedGridResult searchItemsByThirdCat(Integer catId, String sort, Integer page, Integer pageSize) {
 

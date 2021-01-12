@@ -116,6 +116,8 @@ public class PassportController {
         CookieUtils.setCookie(request, response, "user",
                 JsonUtils.objectToJson(users), true);
 
+        // todo 生成用户token，存入redis会话
+        // todo 同步购物车数据
         return ZQJSONResult.ok(users);
     }
 
@@ -138,8 +140,8 @@ public class PassportController {
         //清除用户相关cookie信息
         CookieUtils.deleteCookie(request,response,"user");
 
-        //todo
-        //todo
+        //todo 用户退出登录，需要清空购物车
+        //todo 分布式会话中需要清楚用户数据
 
         return ZQJSONResult.ok();
     }
