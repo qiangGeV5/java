@@ -8,7 +8,9 @@ import com.zq.mapper.*;
 import com.zq.pojo.*;
 import com.zq.pojo.vo.CommentLevelCountsVO;
 import com.zq.pojo.vo.ItemCommentVO;
+import com.zq.pojo.vo.SearchItemsVO;
 import com.zq.service.ItemService;
+import com.zq.utils.DesensitizationUtil;
 import com.zq.utils.PagedGridResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -121,9 +123,14 @@ public class ItemServiceImpl implements ItemService {
         PageHelper.startPage(page,pageSize);
 
         List<ItemCommentVO> itemCommentVOS = itemsMapperCustom.queryItemComments(map);
+        for(ItemCommentVO vo:itemCommentVOS){
+            vo.setNickname(DesensitizationUtil.commonDisplay(vo.getNickname()));
+        }
 
         return setterPagedGrid(itemCommentVOS,page);
     }
+
+
 
     private PagedGridResult setterPagedGrid(List<?> list,Integer page){
         PageInfo<?> pageList = new PageInfo<>(list);
@@ -135,4 +142,34 @@ public class ItemServiceImpl implements ItemService {
 
         return grid;
     }
+
+    @Transactional(propagation = Propagation.SUPPORTS)
+    @Override
+    public PagedGridResult searchItems(String keywords, String sort, Integer page, Integer pageSize) {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("keywords",keywords);
+        map.put("sort",sort);
+
+        PageHelper.startPage(page,pageSize);
+
+        List<SearchItemsVO> searchItemsVOS = itemsMapperCustom.searchItems(map);
+
+        return setterPagedGrid(searchItemsVOS,page);
+    }
+
+    @Override
+    public PagedGridResult searchItemsByThirdCat(Integer catId, String sort, Integer page, Integer pageSize) {
+
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("catId",catId);
+        map.put("sort",sort);
+
+        PageHelper.startPage(page,pageSize);
+
+        List<SearchItemsVO> searchItemsVOS = itemsMapperCustom.searchItemsByThirdCat(map);
+
+        return setterPagedGrid(searchItemsVOS,page);
+    }
+
+
 }

@@ -83,9 +83,69 @@ public class ItemsController extends BaseController{
             page = 1;
         }
         if (pageSize == null){
-            pageSize = COMMENT_PAGE_SIZQ;
+            pageSize = COMMENT_PAGE_SIZE;
         }
         PagedGridResult pagedGridResult = itemService.queryPagedComments(itemId, level, page, pageSize);
+        return ZQJSONResult.ok(pagedGridResult);
+    }
+
+    @ApiOperation(value = "搜索商品", notes = "搜索商品",httpMethod = "GET")
+    @GetMapping("/search")
+    public ZQJSONResult search(
+            @ApiParam(name = "keywords",value = "关键字",required = true)
+            @RequestParam String keywords,
+            @ApiParam(name = "sort",value = "排序",required = false)
+            @RequestParam String sort,
+            @ApiParam(name = "page",value = "查询的页数",required = false)
+            @RequestParam Integer page,
+            @ApiParam(name = "pageSize",value = "每页条数",required = false)
+            @RequestParam Integer pageSize
+    ){
+        if (StringUtils.isBlank(keywords)){
+            return ZQJSONResult.errorMsg("keyWords==NUll");
+        }
+
+
+
+        if (page == null){
+            page = 1;
+        }
+
+        if (pageSize == null){
+            pageSize = PAGE_SIZE;
+        }
+
+        PagedGridResult pagedGridResult = itemService.searchItems(keywords, sort, page, pageSize);
+        return ZQJSONResult.ok(pagedGridResult);
+    }
+
+    @ApiOperation(value = "通过分类id搜索商品", notes = "通过分类id搜索商品",httpMethod = "GET")
+    @GetMapping("/catItems")
+    public ZQJSONResult catItems(
+            @ApiParam(name = "catId",value = "商品id",required = true)
+            @RequestParam Integer catId,
+            @ApiParam(name = "sort",value = "排序",required = false)
+            @RequestParam String sort,
+            @ApiParam(name = "page",value = "查询的页数",required = false)
+            @RequestParam Integer page,
+            @ApiParam(name = "pageSize",value = "每页条数",required = false)
+            @RequestParam Integer pageSize
+    ){
+        if (catId == null){
+            return ZQJSONResult.errorMsg("catId==NUll");
+        }
+
+
+
+        if (page == null){
+            page = 1;
+        }
+
+        if (pageSize == null){
+            pageSize = PAGE_SIZE;
+        }
+
+        PagedGridResult pagedGridResult = itemService.searchItemsByThirdCat(catId, sort, page, pageSize);
         return ZQJSONResult.ok(pagedGridResult);
     }
 
