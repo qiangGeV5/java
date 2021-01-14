@@ -10,6 +10,8 @@ import com.zq.mapper.OrdersMapper;
 import com.zq.pojo.*;
 import com.zq.pojo.bo.SubmitOrderBO;
 
+import com.zq.pojo.vo.MerchantOrdersVO;
+import com.zq.pojo.vo.OrderVO;
 import com.zq.service.AddressService;
 import com.zq.service.ItemService;
 import com.zq.service.OrderService;
@@ -46,7 +48,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Transactional(propagation = Propagation.REQUIRED)
     @Override
-    public void createOrder(SubmitOrderBO submitOrderBO) {
+    public OrderVO createOrder(SubmitOrderBO submitOrderBO) {
 
         String userId = submitOrderBO.getUserId();
         String addressId = submitOrderBO.getAddressId();
@@ -86,7 +88,7 @@ public class OrderServiceImpl implements OrderService {
             //todo 整合redis后，商品数量在redis中的购物车获取
             int buyCounts = 1;
             //2.1、根据规格id 查询商品信息
-            ItemsSpec itemsSpec = itemService.queryItemSpecById(itemSpecIds);
+            ItemsSpec itemsSpec = itemService.queryItemSpecById(itemSpecId);
             totalAmount += itemsSpec.getPriceNormal()*buyCounts;
             realPayAmout = itemsSpec.getPriceDiscount()*buyCounts;
             //2.2根据规格id，获得商品信息以及商品图片
@@ -123,7 +125,30 @@ public class OrderServiceImpl implements OrderService {
         waitPayOrderStatus.setCreatedTime(new Date());
         orderStatusMapper.insert(waitPayOrderStatus);
 
+        //4.构建商户订单，用于传给支付中心
+        MerchantOrdersVO merchantOrdersVO = new MerchantOrdersVO();
+        merchantOrdersVO.setMerchantOrderId(orderId);
+        merchantOrdersVO.setMerchantUserId(userId);
+        merchantOrdersVO.setAmount(realPayAmout+postAmount);
+        merchantOrdersVO.setPayMethod(payMethod);
+
+        //5.构建订单VO
+
+        OrderVO orderVO = new OrderVO();
+        orderVO.setOrderId(orderId);
+        orderVO.setMerchantOrdersVO(merchantOrdersVO);
+
+        return orderVO;
     }
 
+    @Transactional(propagation = Propagation.REQUIRED)
+    @Override
+    public void updateOrderStatus(String orderId, Integer orderStatus) {
+        OrderStatus paidStatus = new OrderStatus();
+        paidStatus.setOrderId(orderId);
+        paidStatus.setOrderStatus(orderStatus);
+        paidStatus.setPayTime(new Date());
 
+        orderStatusMapper.updateByPrimaryKeySelective(paidStatus);
+    }
 }
