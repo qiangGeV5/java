@@ -4,6 +4,7 @@ package com.zq.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.zq.enums.CommentLevel;
+import com.zq.enums.YesOrNo;
 import com.zq.mapper.*;
 import com.zq.pojo.*;
 import com.zq.pojo.bo.ShopcartBO;
@@ -188,5 +189,38 @@ public class ItemServiceImpl implements ItemService {
         return shopcartBOS;
     }
 
+    @Transactional(propagation = Propagation.SUPPORTS)
+    @Override
+    public ItemsSpec queryItemSpecById(String specId) {
+        return itemsSpecMapper.selectByPrimaryKey(specId);
+    }
 
+    @Transactional(propagation = Propagation.SUPPORTS)
+    @Override
+    public String queryItemMainImgById(String itemId) {
+        ItemsImg itemsImg = new ItemsImg();
+        itemsImg.setItemId(itemId);
+        itemsImg.setIsMain(YesOrNo.YES.type);
+
+        ItemsImg result = itemsImgMapper.selectOne(itemsImg);
+
+        String imgUrl = result.getUrl();
+        return imgUrl != null ? imgUrl : "";
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    @Override
+    public void decreaseItemSpecStock(String specId, Integer buyCounts) {
+        //
+        // 1.查询库存
+        // 2.减少库存
+        //
+        //
+
+        int i = itemsMapperCustom.decreaseItemSpecStock(specId, buyCounts);
+        if (i != 1){
+            throw new RuntimeException("订单创建失败，库存不足");
+        }
+
+    }
 }
