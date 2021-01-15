@@ -3,6 +3,7 @@ package com.zq.controller;
 
 import com.zq.enums.OrderStatusEnum;
 import com.zq.enums.PayMethod;
+import com.zq.pojo.OrderStatus;
 import com.zq.pojo.bo.SubmitOrderBO;
 import com.zq.pojo.vo.MerchantOrdersVO;
 import com.zq.pojo.vo.OrderVO;
@@ -72,6 +73,8 @@ public class OrdersController extends BaseController{
         }
 
 
+        //todo 这里是测试方法，正常应该使用注册中心调用notifyMerchantOrderPaid接口，但是我没写支付中心在这里自动调用的
+        orderService.updateOrderStatus(merchantOrdersVO.getMerchantOrderId(), OrderStatusEnum.WAIT_DELIVER.type);
 
         return ZQJSONResult.ok(orderId);
     }
@@ -84,4 +87,14 @@ public class OrdersController extends BaseController{
         return HttpStatus.OK.value();
 
     }
+
+    @PostMapping("getPaidOrderInfo")
+    public ZQJSONResult getPaidOrderInfo(String orderId){
+        OrderStatus orderStatus = orderService.queryOrderStatusInfo(orderId);
+
+        return ZQJSONResult.ok(orderStatus);
+
+    }
+
+
 }
