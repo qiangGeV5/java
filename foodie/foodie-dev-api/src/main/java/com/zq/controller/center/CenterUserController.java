@@ -1,10 +1,12 @@
 package com.zq.controller.center;
 
+import com.zq.config.FileUpload;
 import com.zq.controller.BaseController;
 import com.zq.pojo.Users;
 import com.zq.pojo.bo.center.CenterUserBO;
 import com.zq.service.center.CenterUserService;
 import com.zq.utils.CookieUtils;
+import com.zq.utils.DateUtil;
 import com.zq.utils.JsonUtils;
 import com.zq.utils.ZQJSONResult;
 import io.swagger.annotations.Api;
@@ -40,6 +42,9 @@ public class CenterUserController extends BaseController {
     @Autowired
     private CenterUserService centerUserService;
 
+    @Autowired
+    private FileUpload fileUpload;
+
     @ApiOperation(value = "修改用户头像",notes = "修改用户头像",httpMethod = "POST")
     @PostMapping("/uploadFace")
     public ZQJSONResult uploadFace(
@@ -52,8 +57,9 @@ public class CenterUserController extends BaseController {
     ) {
 
         FileOutputStream fileOutputStream = null;
+        String newFileName = null;
         //用户保存地址
-        String fileSpace = IMAGE_USER_FACE;
+        String fileSpace = fileUpload.getImageUserFace();
         String uploadPathPrefix = File.separator + userId;
 
         if (file != null){
@@ -65,7 +71,7 @@ public class CenterUserController extends BaseController {
                    //文件后缀名
                    String suffix = fileNameArr[fileNameArr.length - 1];
                    //文件重命名 （覆盖式上传）
-                   String newFileName = "face-" + userId + "." +suffix;
+                   newFileName = "face-" + userId + "." +suffix;
                    //文件头像最终上传位置
                    String finalFacePath = fileSpace + uploadPathPrefix + File.separator + newFileName;
                    File outFile = new File(finalFacePath);
@@ -96,6 +102,16 @@ public class CenterUserController extends BaseController {
         else {
             return ZQJSONResult.errorMsg("");
         }
+
+        String imageServerUrl = fileUpload.getImageServerUrl();
+        //添加时间戳防止前端缓存
+        imageServerUrl+=("/"+uploadPathPrefix+"/"+newFileName)+"?t="+ DateUtil.getCurrentDateString(DateUtil.DATETIME_PATTERN);
+        centerUserService.updateUserFace(userId,imageServerUrl);
+
+//        CookieUtils.setCookie(request,response,"user", JsonUtils.objectToJson("users"),true);
+
+        //TODO 后续修改整合redis 添加token
+
         return ZQJSONResult.ok();
 
     }
@@ -120,7 +136,7 @@ public class CenterUserController extends BaseController {
 
         users = setNullProperty(users);
 
-        CookieUtils.setCookie(request,response,"user", JsonUtils.objectToJson("users"),true);
+//        CookieUtils.setCookie(request,response,"user", JsonUtils.objectToJson("users"),true);
 
         //TODO 后续修改整合redis 添加token
 
