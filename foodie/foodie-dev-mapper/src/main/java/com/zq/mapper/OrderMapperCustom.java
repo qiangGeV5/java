@@ -2,6 +2,7 @@ package com.zq.mapper;
 
 import com.zq.my.mapper.MyMapper;
 import com.zq.pojo.Category;
+import com.zq.pojo.OrderStatus;
 import com.zq.pojo.vo.MyOrdersVO;
 import org.apache.ibatis.annotations.Param;
 
@@ -10,4 +11,8 @@ import java.util.Map;
 
 public interface OrderMapperCustom extends MyMapper<Category> {
     public List<MyOrdersVO> queryMyOrders(@Param("paramsMap") Map<String,Object> map);
+
+    public int getMyOrderStatusCounts(@Param("paramsMap") Map<String, Object> map);
+
+    public List<OrderStatus> getMyOrderTrend(@Param("paramsMap") Map<String, Object> map);
 }

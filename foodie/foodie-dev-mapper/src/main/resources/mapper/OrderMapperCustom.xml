@@ -15,6 +15,7 @@
             <id column="itemId" property="itemId" />
             <result column="itemName" property="itemName"  />
             <result column="itemImg" property="itemImg" />
+            <result column="isComment" property="isComment" />
             <result column="itemSpecName" property="itemSpecName" />
             <result column="buyCounts" property="buyCounts" />
             <result column="price" property="price" />
@@ -28,6 +29,7 @@
         od.created_time AS createdTime,
         od.pay_method AS  payMethod,
         od.real_pay_amount AS  realPayAmount,
+        od.is_comment AS isComment,
         od.post_amount AS postAmount,
         os.order_status AS  orderStatus
         FROM
@@ -94,5 +96,52 @@
 <!--        ORDER BY-->
 <!--            od.created_time ASC-->
 <!--    </select>-->
+
+    <select id="getMyOrderStatusCounts" parameterType="Map" resultType="int">
+        SELECT
+        count(1)
+        FROM
+        orders o
+        LEFT JOIN
+        order_status os
+        on
+        o.id = os.order_id
+        WHERE
+        o.user_id = #{paramsMap.userId}
+        AND
+        os.order_status = #{paramsMap.orderStatus}
+        <if test="paramsMap.isComment != null">
+            and o.is_comment = #{paramsMap.isComment}
+        </if>
+    </select>
+
+
+    <select id="getMyOrderTrend" parameterType="Map" resultType="com.zq.pojo.OrderStatus">
+
+        SELECT
+            os.order_id as orderId,
+            os.order_status as orderStatus,
+            os.created_time as createdTime,
+            os.pay_time as payTime,
+            os.deliver_time as deliverTime,
+            os.success_time as successTime,
+            os.close_time as closeTime,
+            os.comment_time as commentTime
+        FROM
+          orders o
+        LEFT JOIN
+          order_status os
+        on
+          o.id = os.order_id
+        WHERE
+          o.is_delete = 0
+        AND
+          o.user_id = #{paramsMap.userId}
+        AND
+          os.order_status in (20, 30, 40)
+        ORDER BY
+          os.order_id
+        DESC
+    </select>
 
 </mapper>

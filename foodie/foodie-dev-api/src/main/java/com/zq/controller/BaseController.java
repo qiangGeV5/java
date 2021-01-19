@@ -1,5 +1,9 @@
 package com.zq.controller;
 
+import com.zq.pojo.Orders;
+import com.zq.service.center.MyOrdersService;
+import com.zq.utils.ZQJSONResult;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import java.io.File;
@@ -20,4 +24,18 @@ public class BaseController {
                                                     File.separator + "admin" +
                                                     File.separator + "Desktop" +
                                                     File.separator + "image";
+
+    @Autowired
+    private MyOrdersService myOrdersService;
+    /**
+     * 用于验证用户和订单是否有关联关系，避免非法用户调用
+     * @return
+     */
+    public ZQJSONResult checkUserOrder(String userId, String orderId) {
+        Orders order = myOrdersService.queryMyOrder(userId, orderId);
+        if (order == null) {
+            return ZQJSONResult.errorMsg("订单不存在！");
+        }
+        return ZQJSONResult.ok(order);
+    }
 }
