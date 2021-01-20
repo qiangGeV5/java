@@ -16,6 +16,7 @@
         <module>foodie-dev-api</module>
     </modules>
 
+
     <!--    //打包方式pom wai jra-->
     <!--
     1、在聚合工程中可以分为顶级项目（顶级工程、父工程）与子工程，这两者的关系其实就是父子继承的管辖，子工程在maven里面，称为模块，模块之间平级，是可以相互依赖，
@@ -31,13 +32,31 @@
         <version>2.1.5.RELEASE</version>
         <relativePath />
     </parent>
+
+
     <!--设置资源属性-->
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
+<!--        <failOnMissingWebXml>false</failOnMissingWebXml>-->
     </properties>
-    <!--引入依赖 dependency-->
+
+
+    <build>
+<!--        <finalName>foodie-dev-api</finalName>-->
+        <plugins>
+            <plugin>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.2.2</version>
+                <configuration>
+                    <!--如果想在没有web.xml文件的情况下构建WAR，请设置为false。-->
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+<!--    引入依赖 dependency-->
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -53,6 +72,13 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+            <exclusions>
+<!--                打包war第二部 移除自带的tomcat-->
+                <exclusion>
+                    <artifactId>spring-boot-starter-tomcat</artifactId>
+                    <groupId>org.springframework.boot</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
@@ -144,7 +170,35 @@
             <version>1.18.16</version>
             <scope>provided</scope>
         </dependency>
+
+        <!--    第三步添加依赖-->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+            <version>2.5</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>3.8.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-war-plugin</artifactId>
+            <version>3.2.2</version>
+
+
+        </dependency>
+
+
+
     </dependencies>
+
+
+
 
 
 

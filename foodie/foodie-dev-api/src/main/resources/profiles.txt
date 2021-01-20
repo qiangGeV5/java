@@ -1,0 +1,18 @@
+profiles 多环境修改
+
+1、1数据源配置注意分布式需要将localhost 修改为内网ip
+
+mybatis 日志打印
+dve 环境日志需要，生成环境不需要
+
+图片服务
+file.imageUserFace = /workspaces/image
+file.imageServerUrl = http://34.80.74.194:8088/foodie-dev-api/
+
+从支付中心回调店址
+String payReturnUrl = "http://localhost:8088/orders/notifyMerchantOrderPaid?merchantOrderId=210114B832XN3GHH";
+
+打包方式
+jar 服务化的概念，后续springcloud 所有服务都是jar
+
+war 应用程序的概念，可以提供服务和接口，（包含页面）

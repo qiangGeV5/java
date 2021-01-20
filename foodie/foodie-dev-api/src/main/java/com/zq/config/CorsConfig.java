@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
-
+//跨域问题
 @Configuration
 public class CorsConfig {
 
@@ -18,6 +18,17 @@ public class CorsConfig {
         //1添加cors配置信息
         CorsConfiguration config = new CorsConfiguration();
         config.addAllowedOrigin("http://localhost:8080"); //可以写星号 ===  *
+        config.addAllowedOrigin("http://34.80.74.194:8080"); //可以写星号 ===  *
+        config.addAllowedOrigin("http://34.80.74.194:8080"); //可以写星号 ===  *
+        config.addAllowedOrigin("http://34.80.74.194"); //可以写星号 ===  *
+        config.addAllowedOrigin("http://34.80.74.194"); //可以写星号 ===  *
+
+
+//        serverUrl: "http://34.80.74.194:8088/foodie-dev-api",                      // 接口服务接口地址
+//                paymentServerUrl: "http://payment.t.mukewang.com/foodie-payment",       // 支付中心服务地址
+//                shopServerUrl: "http://34.80.74.194:8080/foodie-shop/",                            // 门户网站地址
+//                centerServerUrl: "http://34.80.74.194:8080/foodie-center/",                        // 用户中心地址
+//                cookieDomain: ".80.74.194;",                                       // cookie 域
 
         //设置是否发送cookie信息
         config.setAllowCredentials(true);

@@ -10,13 +10,15 @@
     <modelVersion>4.0.0</modelVersion>
 
 <!--    默认打包方式是jar-->
-    <packaging>jar</packaging>
+<!--    <packaging>jar</packaging>-->
     <dependencies>
         <dependency>
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
         </dependency>
     </dependencies>
+
+
 
     <artifactId>foodie-dev-common</artifactId>
 

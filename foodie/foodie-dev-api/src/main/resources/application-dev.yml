@@ -1,0 +1,19 @@
+server:
+  port: 8088
+
+spring:
+  datasource: # 数据源的相关配置
+    url: jdbc:mysql://localhost:3306/foodie-shop-dev?useSSL=false&useUnicode=true&characterEncoding=UTF-8&autoReconnect
+    username: root
+    password: 123456
+
+############################################################
+#
+# mybatis 配置
+#
+############################################################
+mybatis:
+#  type-aliases-package: com.zq.pojo # 所有POJO类所在包路径
+#  mapper-locations: classpath:mapper/*.xml # mapper映射文件
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

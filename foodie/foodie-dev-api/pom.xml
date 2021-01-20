@@ -11,6 +11,9 @@
 
     <artifactId>foodie-dev-api</artifactId>
 
+<!--    <packaging>jar</packaging>-->
+<!--    1.第一步-->
+    <packaging>war</packaging>
     <!--
         common-mail 可以依赖多个子模块
         api -> service -> mapper -> pojo -> common
@@ -28,7 +31,10 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+
     </dependencies>
+
+
 
 
 
