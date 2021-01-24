@@ -7,10 +7,13 @@ import com.zq.pojo.vo.CategoryVO;
 import com.zq.pojo.vo.NewItemsVO;
 import com.zq.service.CarouselService;
 import com.zq.service.CategoryService;
+import com.zq.utils.JsonUtils;
+import com.zq.utils.RedisOperator;
 import com.zq.utils.ZQJSONResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import springfox.documentation.annotations.ApiIgnore;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Api(value = "首页",tags = "首页相关接口")
@@ -31,11 +35,30 @@ public class IndexController {
     @Autowired
     private CategoryService categoryService;
 
+    @Autowired
+    private RedisOperator redisOperator;
+
     @ApiOperation(value = "轮播图", notes = "轮播图",httpMethod = "GET")
     @GetMapping("/carousel")
     public ZQJSONResult carousel(){
 
-        List<Carousel> carousels = carouselService.queryAll(YesOrNo.YES.type);
+        List<Carousel> carousels = null;
+        String carouselStr = redisOperator.get("carousel");
+        if (StringUtils.isBlank(carouselStr)){
+            carousels = carouselService.queryAll(YesOrNo.YES.type);
+            redisOperator.set("carousel", JsonUtils.objectToJson(carousels));
+        }else {
+
+            carousels = JsonUtils.jsonToList(carouselStr,Carousel.class);
+        }
+
+        /**
+         * 1.后台运营系统，一旦发生更改就删除缓存
+         * 2.定时重置 （大量缓存时间错开）
+         * 3.每个轮播图都有时间段，每个广告都会有过期时间，过期时间到了就开始重置
+         */
+
+
 
         return ZQJSONResult.ok(carousels);
     }
@@ -50,9 +73,18 @@ public class IndexController {
     @GetMapping("/cats")
     public ZQJSONResult category(){
 
-        List<Category> categories = categoryService.queryAllRootLevelCat();
 
-        return ZQJSONResult.ok(categories);
+        List<Category> list = new ArrayList<>();
+        String catsStr = redisOperator.get("cats");
+        if (StringUtils.isBlank(catsStr)) {
+            list = categoryService.queryAllRootLevelCat();
+            redisOperator.set("cats", JsonUtils.objectToJson(list));
+        } else {
+            list = JsonUtils.jsonToList(catsStr, Category.class);
+        }
+
+
+        return ZQJSONResult.ok(list);
     }
 
     @ApiOperation(value = "获取商品子分类", notes = "获取商品子分类",httpMethod = "GET")

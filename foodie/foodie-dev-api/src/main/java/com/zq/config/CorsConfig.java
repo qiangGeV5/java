@@ -22,6 +22,7 @@ public class CorsConfig {
         config.addAllowedOrigin("http://34.80.74.194:8080"); //可以写星号 ===  *
         config.addAllowedOrigin("http://34.80.74.194"); //可以写星号 ===  *
         config.addAllowedOrigin("http://34.80.74.194"); //可以写星号 ===  *
+        config.addAllowedOrigin("*");
 
 
 //        serverUrl: "http://34.80.74.194:8088/foodie-dev-api",                      // 接口服务接口地址
