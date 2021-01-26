@@ -2,29 +2,33 @@ package com.zq.controller;
 
 import com.zq.pojo.Users;
 import com.zq.pojo.bo.UserBO;
+import com.zq.pojo.vo.UsersVO;
 import com.zq.service.UserService;
-import com.zq.utils.CookieUtils;
-import com.zq.utils.JsonUtils;
-import com.zq.utils.MD5Utils;
-import com.zq.utils.ZQJSONResult;
+import com.zq.utils.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.UUID;
 
 @Api(value = "注册登录",tags = "用于注册登录的相关接口")
 @RestController
 @RequestMapping("passport")
-public class PassportController {
+public class PassportController extends BaseController{
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private RedisOperator redisOperator;
+
 
     @ApiOperation(value = "用户名是否存在", notes = "用户名是否存在",httpMethod = "GET")
     @GetMapping("/usernameIsExist")
@@ -81,16 +85,18 @@ public class PassportController {
         Users users = userService.createUser(userBO);
 
 
-        users = setNullProperty(users);
+        UsersVO usersVO = conventUserVO(users);
 
         CookieUtils.setCookie(request, response, "user",
-                JsonUtils.objectToJson(users), true);
+                JsonUtils.objectToJson(usersVO), true);
 
 
 
         return ZQJSONResult.ok();
 
     }
+
+
 
     @ApiOperation(value = "用户登录", notes = "用户登录",httpMethod = "POST")
     @PostMapping("/login")
@@ -111,10 +117,11 @@ public class PassportController {
         }
 
 
-        users = setNullProperty(users);
+//        users = setNullProperty(users);
 
+        UsersVO usersVO = conventUserVO(users);
         CookieUtils.setCookie(request, response, "user",
-                JsonUtils.objectToJson(users), true);
+                JsonUtils.objectToJson(usersVO), true);
 
         // todo 生成用户token，存入redis会话
         // todo 同步购物车数据
@@ -141,7 +148,8 @@ public class PassportController {
         CookieUtils.deleteCookie(request,response,"user");
 
         //todo 用户退出登录，需要清空购物车
-        //todo 分布式会话中需要清楚用户数据
+        //分布式会话中需要清楚用户数据
+        redisOperator.del(REDIS_USER_TOKEN+":"+userId);
 
         return ZQJSONResult.ok();
     }

@@ -4,6 +4,7 @@ import com.zq.config.FileUpload;
 import com.zq.controller.BaseController;
 import com.zq.pojo.Users;
 import com.zq.pojo.bo.center.CenterUserBO;
+import com.zq.pojo.vo.UsersVO;
 import com.zq.service.center.CenterUserService;
 import com.zq.utils.CookieUtils;
 import com.zq.utils.DateUtil;
@@ -106,12 +107,13 @@ public class CenterUserController extends BaseController {
         String imageServerUrl = fileUpload.getImageServerUrl();
         //添加时间戳防止前端缓存
         imageServerUrl+=("/"+uploadPathPrefix+"/"+newFileName)+"?t="+ DateUtil.getCurrentDateString(DateUtil.DATETIME_PATTERN);
-        centerUserService.updateUserFace(userId,imageServerUrl);
+        Users users = centerUserService.updateUserFace(userId, imageServerUrl);
 
-//        CookieUtils.setCookie(request,response,"user", JsonUtils.objectToJson("users"),true);
 
-        //TODO 后续修改整合redis 添加token
 
+        //修改整合redis 添加token
+        UsersVO usersVO = conventUserVO(users);
+        CookieUtils.setCookie(request,response,"user", JsonUtils.objectToJson(usersVO),true);
         return ZQJSONResult.ok();
 
     }
@@ -134,11 +136,12 @@ public class CenterUserController extends BaseController {
 
         Users users = centerUserService.updateUserInfo(userId,userBO);
 
-        users = setNullProperty(users);
+//        users = setNullProperty(users);
 
-//        CookieUtils.setCookie(request,response,"user", JsonUtils.objectToJson("users"),true);
+        UsersVO usersVO = conventUserVO(users);
+        CookieUtils.setCookie(request,response,"user", JsonUtils.objectToJson(usersVO),true);
 
-        //TODO 后续修改整合redis 添加token
+        //后续修改整合redis 添加token
 
         return ZQJSONResult.ok();
 
