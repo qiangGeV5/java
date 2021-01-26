@@ -17,6 +17,7 @@ import java.util.UUID;
 public class BaseController {
 
     public static final String REDIS_USER_TOKEN = "redis_user_token";
+
     public static final String FOODIE_SHOPCART = "shopcart";
 
     //微信支付成功 -> 支付中心 -> 天天吃货平台
